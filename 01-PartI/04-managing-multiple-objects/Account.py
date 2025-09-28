@@ -13,7 +13,7 @@ class Account():
         if amount_to_deposit < 0:
             print("You cannot deposit a negative amount")
             return None
-        self.balance += 1
+        self.balance += amount_to_deposit
         return self.balance
     
     def withdraw(self, amount_to_withdraw, password):
