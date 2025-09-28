@@ -1,11 +1,15 @@
 # Bank that manages a dictinoary of Account objects
-
+from datetime import datetime, time
 from Account import Account
 
 class Bank():
     def __init__(self):
         self.accounts_dict = {}
         self.next_account_number = 0
+        
+        self.start_hour = time(9, 0)
+        self.end_hour = time(18, 0)
+        self.current_hour = datetime.now().time()
         
     def create_account(self, the_name, the_starting_amount, the_password):
         account = Account(the_name, the_starting_amount, the_password)
@@ -39,7 +43,7 @@ class Bank():
             del self.accounts_dict[user_account_number]
             print("Your account is now closed.")
             
-    def  balance(self):
+    def balance(self):
         print("*** Balance ***")
         user_account_number = int(input("Please enter your account number: "))
         user_account_password = input("Please enter the password: ")
@@ -73,6 +77,13 @@ class Bank():
             
     def withdraw(self):
         print("*** Withdraw ***")
+        
+        def current_hour():
+            return self.current_hour < self.start_hour or self.current_hour > self.end_hour
+        
+        if current_hour():
+            print("You are after hours. Please try again later.")
+            return
         user_account_number = int(input("Please enter your account number: "))
         user_amount = int(input("Please enter the amount to withdraw: "))
         user_account_password = input("Please enter the password: ")
