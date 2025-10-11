@@ -15,6 +15,7 @@ FRAMES_PER_SECOND = 30
 N_PIXELS_PER_FRAME = 3
 BASE_PATH = Path(__file__).resolve().parent
 path_to_ball = BASE_PATH / "images/ball.png"
+path_to_sound = BASE_PATH / "sounds/boing.wav"
 
 # 3 - Initialize the world
 pygame.init()
@@ -23,6 +24,7 @@ clock = pygame.time.Clock()
 
 # 4 - Load assests: image(s), sound(s), etc.
 ball_image = pygame.image.load(path_to_ball)
+bounce_sound = pygame.mixer.Sound(path_to_sound)
 
 # 5 - Initialize variables
 ball_rect = ball_image.get_rect()
@@ -42,9 +44,11 @@ while True:
             
     if (ball_rect.left < 0) or (ball_rect.right >= WINDOW_WIDTH):
         x_speed = -x_speed
+        bounce_sound.play()
         
     if (ball_rect.top < 0) or (ball_rect.bottom >= WINDOW_HEIGHT):
         y_speed = -y_speed
+        bounce_sound.play()
         
     # Update the ball's rectangle using the speed in two directions
     ball_rect.left += x_speed
