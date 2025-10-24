@@ -32,7 +32,7 @@ class SimpleButton():
             # The button only cares about mouse-related events
             return False
          
-        event_point_in_button_rect = self.rect.collidepoint(event_obj.pos)
+        event_point_in_button_rect = self.rec.collidepoint(event_obj.pos)
          
         if self.state == SimpleButton.STATE_IDLE:
             if (event_obj.type == MOUSEBUTTONDOWN) and event_point_in_button_rect:
