@@ -11,11 +11,12 @@ class SimpleButton():
     STATE_ARMED = "armed"  # button is down, mouse over button
     STATE_DISARMED = "disarmed"  # clicked down on button, rolled off
     
-    def __init__(self, window, loc, up, down):
+    def __init__(self, window, loc, up, down, callback=None):
         self.window = window
         self.loc = loc
         self.surface_up = pygame.image.load(up)
         self.surface_down = pygame.image.load(down)
+        self.callback = callback
         
         # Get the rect of the button (used to see if the mouse is over the button)
         self.rec = self.surface_up.get_rect()
@@ -42,7 +43,8 @@ class SimpleButton():
         elif self.state == SimpleButton.STATE_ARMED:
             if (event_obj.type == MOUSEBUTTONUP) and  event_point_in_button_rect:
                 self.state = SimpleButton.STATE_IDLE
-                return True  # clicked!
+                if self.callback != None:
+                    self.callback()
             
             if (event_obj.type == MOUSEMOTION) and (not event_point_in_button_rect):
                 self.state = SimpleButton.STATE_DISARMED
